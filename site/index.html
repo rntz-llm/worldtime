@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>World Clock</title>
+  <meta name="description" content="See the time around the world, and convert a time between time zones.">
+  <meta name="color-scheme" content="dark light">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='-50 -50 100 100'%3E%3Ccircle r='46' fill='%23fff' stroke='%23000' stroke-width='6'/%3E%3Cpath d='M0 0V-30M0 0L20 12' stroke='%23000' stroke-width='7' stroke-linecap='round'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="topbar">
+    <h1>World Clock</h1>
+    <div class="topbar-actions">
+      <div class="segmented" role="group" aria-label="Time format">
+        <button type="button" id="fmt-12" aria-pressed="false">12h</button>
+        <button type="button" id="fmt-24" aria-pressed="false">24h</button>
+      </div>
+      <button type="button" id="add-btn" class="icon-btn" aria-label="Add a city" title="Add a city">
+        <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 3v14M3 10h14"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <main>
+    <div class="map" id="map">
+      <svg viewBox="0 6 360 150" preserveAspectRatio="none" aria-hidden="true">
+        <rect class="ocean" x="0" y="0" width="360" height="180"/>
+        <path class="land" id="land"/>
+        <g class="meridians" id="meridians"></g>
+        <path class="night" id="night"/>
+        <path class="terminator" id="terminator"/>
+      </svg>
+      <div class="pins" id="pins"></div>
+    </div>
+
+    <section class="converter" aria-label="Convert a time">
+      <div class="status" id="status">
+        <span class="status-dot"></span>
+        <span id="status-text">Live</span>
+      </div>
+      <div class="converter-fields">
+        <label>Time <input type="time" id="conv-time" required></label>
+        <label>on <input type="date" id="conv-date"></label>
+        <label>in <select id="conv-zone"></select></label>
+        <button type="button" id="conv-now" class="pill-btn" hidden>Back to now</button>
+      </div>
+    </section>
+
+    <section class="cards" id="cards" aria-live="off"></section>
+    <p class="empty" id="empty" hidden>No cities yet. Use <strong>+</strong> to add one.</p>
+  </main>
+
+  <footer class="footer">
+    Your choices are saved in this browser only. Map data: Natural Earth.
+    Sunrise and sunset are approximate.
+  </footer>
+
+  <dialog id="add-dialog" aria-label="Add a city">
+    <div class="dialog-head">
+      <input type="search" id="search" placeholder="Search city, country or time zone" autocomplete="off" spellcheck="false" aria-label="Search">
+      <button type="button" id="dialog-close" class="pill-btn">Done</button>
+    </div>
+    <ul id="results" class="results"></ul>
+  </dialog>
+
+  <script src="data/places.js"></script>
+  <script src="data/land.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

@@ -1,6 +1,5 @@
 :root {
   --bg: #1e1e1e;
-  --topbar: #2a2a2a;
   --text: #f5f5f7;
   --muted: #a1a1a6;
   --card: #2c2c2e;
@@ -23,7 +22,6 @@
 @media (prefers-color-scheme: light) {
   :root {
     --bg: #f2f2f7;
-    --topbar: #e5e5ea;
     --text: #1c1c1e;
     --muted: #6e6e73;
     --card: #ffffff;
@@ -56,18 +54,13 @@ body {
 
 button, input, select { font: inherit; color: inherit; }
 
-/* Top bar */
-.topbar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  padding: 10px 16px;
-  background: var(--topbar);
-  border-bottom: 1px solid var(--border);
+.visually-hidden {
+  position: absolute;
+  width: 1px; height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
 }
-.topbar h1 { margin: 0; font-size: 17px; font-weight: 600; }
-.topbar-actions { display: flex; align-items: center; gap: 12px; }
 
 .segmented {
   display: inline-flex;
@@ -143,15 +136,19 @@ main { max-width: 1500px; margin: 0 auto; }
 .pin-label span { display: block; font-size: 12px; font-variant-numeric: tabular-nums; }
 .pin-label.left { text-align: right; }
 
-/* Converter */
-.converter {
-  display: flex;
-  flex-wrap: wrap;
+/* Ribbon under the map: live/chosen status, converter, then format and add buttons at the right. */
+.ribbon {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  grid-template-areas: "status fields actions";
   align-items: center;
   gap: 10px 20px;
   padding: 14px 16px;
   border-bottom: 1px solid var(--border);
 }
+.ribbon .status { grid-area: status; }
+.ribbon .converter-fields { grid-area: fields; }
+.ribbon-actions { grid-area: actions; display: flex; align-items: center; gap: 12px; }
 .status { display: inline-flex; align-items: center; gap: 8px; font-weight: 600; min-width: 0; }
 .status-dot { width: 9px; height: 9px; border-radius: 50%; background: var(--live); flex: none; }
 .status.live .status-dot { animation: pulse 2s ease-in-out infinite; }
@@ -160,8 +157,8 @@ main { max-width: 1500px; margin: 0 auto; }
 @media (prefers-reduced-motion: reduce) { .status.live .status-dot { animation: none; } }
 
 .converter-fields { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 14px; }
-.converter label { display: inline-flex; align-items: center; gap: 6px; color: var(--muted); }
-.converter input, .converter select {
+.converter-fields label { display: inline-flex; align-items: center; gap: 6px; color: var(--muted); }
+.converter-fields input, .converter-fields select {
   background: var(--card);
   border: 1px solid var(--border);
   border-radius: 8px;
@@ -170,7 +167,7 @@ main { max-width: 1500px; margin: 0 auto; }
   min-height: 32px;
   max-width: 100%;
 }
-.converter select { max-width: 260px; }
+.converter-fields select { max-width: 260px; }
 
 /* Cards */
 .cards {
@@ -281,5 +278,10 @@ dialog::backdrop { background: rgba(0, 0, 0, 0.45); }
   .pin-label b { font-size: 12px; }
   .pin-label span { font-size: 10px; }
   .pin-dot { left: -4px; top: -4px; width: 8px; height: 8px; }
-  .converter select { max-width: 160px; }
+  .converter-fields select { max-width: 160px; }
+  /* Status and buttons share the top row; the converter gets a row of its own. */
+  .ribbon {
+    grid-template-columns: 1fr auto;
+    grid-template-areas: "status actions" "fields fields";
+  }
 }

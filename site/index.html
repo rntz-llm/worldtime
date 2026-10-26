@@ -10,20 +10,8 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <header class="topbar">
-    <h1>World Clock</h1>
-    <div class="topbar-actions">
-      <div class="segmented" role="group" aria-label="Time format">
-        <button type="button" id="fmt-12" aria-pressed="false">12h</button>
-        <button type="button" id="fmt-24" aria-pressed="false">24h</button>
-      </div>
-      <button type="button" id="add-btn" class="icon-btn" aria-label="Add a city" title="Add a city">
-        <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 3v14M3 10h14"/></svg>
-      </button>
-    </div>
-  </header>
-
   <main>
+    <h1 class="visually-hidden">World Clock</h1>
     <div class="map" id="map">
       <svg viewBox="0 6 360 150" preserveAspectRatio="none" aria-hidden="true">
         <rect class="ocean" x="0" y="0" width="360" height="180"/>
@@ -35,18 +23,27 @@
       <div class="pins" id="pins"></div>
     </div>
 
-    <section class="converter" aria-label="Convert a time">
+    <div class="ribbon">
       <div class="status" id="status">
         <span class="status-dot"></span>
         <span id="status-text">Live</span>
       </div>
-      <div class="converter-fields">
+      <div class="converter-fields" role="group" aria-label="Convert a time">
         <label>Time <input type="time" id="conv-time" required></label>
         <label>on <input type="date" id="conv-date"></label>
         <label>in <select id="conv-zone"></select></label>
         <button type="button" id="conv-now" class="pill-btn" hidden>Back to now</button>
       </div>
-    </section>
+      <div class="ribbon-actions">
+        <div class="segmented" role="group" aria-label="Time format">
+          <button type="button" id="fmt-12" aria-pressed="false">12h</button>
+          <button type="button" id="fmt-24" aria-pressed="false">24h</button>
+        </div>
+        <button type="button" id="add-btn" class="icon-btn" aria-label="Add a city" title="Add a city">
+          <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 3v14M3 10h14"/></svg>
+        </button>
+      </div>
+    </div>
 
     <section class="cards" id="cards" aria-live="off"></section>
     <p class="empty" id="empty" hidden>No cities yet. Use <strong>+</strong> to add one.</p>

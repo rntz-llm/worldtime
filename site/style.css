@@ -210,7 +210,16 @@ main { max-width: 1500px; margin: 0 auto; }
 
 /* Clock faces */
 .clock .face { fill: #fff; }
-.clock .num { fill: #000; font-size: 13px; font-weight: 600; text-anchor: middle; dominant-baseline: central; font-family: -apple-system, BlinkMacSystemFont, "SF Pro Rounded", "Segoe UI", Roboto, Arial, sans-serif; }
+.clock .num {
+  fill: #000;
+  font-size: 13px;
+  font-weight: 600;
+  /* Proportional figures (the card itself uses tabular ones) so "11" and "12" sit snugly. */
+  font-variant-numeric: proportional-nums;
+  text-anchor: middle;
+  dominant-baseline: central;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Rounded", "Segoe UI", Roboto, Arial, sans-serif;
+}
 .clock .hand { stroke: #000; stroke-linecap: round; }
 .clock .hub { fill: #000; }
 .clock .sec { stroke: var(--accent); stroke-width: 1; stroke-linecap: round; }
